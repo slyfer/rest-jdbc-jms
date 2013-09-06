@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema version="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	jaxb:extensionBindingPrefixes="xjc" elementFormDefault="qualified">
+	
+	<!-- Needs to avoid creation of jaxbElement for primitives types -->
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:globalBindings>
+				<xjc:simple />
+			</jaxb:globalBindings>
+		</xs:appinfo>
+	</xs:annotation>
+
+	<!-- root element -->
+	<xs:element name="response" type="response" />
+
+	<!-- response type -->
+	<xs:complexType name="response">
+		<xs:sequence>
+			<xs:element name="id" type="xs:string" />
+			<xs:element name="timestamp" type="xs:dateTime" />
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

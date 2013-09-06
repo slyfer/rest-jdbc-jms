@@ -1,0 +1,18 @@
+<project name="core" default="help" basedir=".">
+
+        <target name="help">
+                <echo>Run "ant xjc_{target}" to generate Java Classes from xsd. Available target are: demo</echo>
+        </target>
+
+        <target name="xjc_demo">
+                <exec failonerror="true" executable="xjc" dir="src/main/java">
+                        <arg value="-p" />
+                        <arg value="com.demo.rs.model" />
+                        <arg value="-mark-generated" />
+                        <arg value="-extension" />
+                        <arg value="-no-header" />
+                        <arg value="-npa" />
+                        <arg value="com/demo/rs/model/Response.xsd" />
+                </exec>
+        </target>
+</project>

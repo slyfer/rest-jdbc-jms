@@ -9,16 +9,17 @@
                                                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
                                             	http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 
+	<!-- cxf imports -->
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
-	<!-- SERVIZI STATISTICS <bean id="performanceServiceImpl" scope="prototype" 
-		class="it.seat.performance.services.statistics.PerformanceServiceImpl" /> 
-		<bean id="randomServiceImpl" scope="prototype" class="it.seat.performance.services.random.RandomServiceImpl" 
-		/> <jaxrs:server id="performanceService" address="/"> <jaxrs:serviceBeans> 
-		<ref bean="performanceServiceImpl" /> <ref bean="randomServiceImpl" /> </jaxrs:serviceBeans> 
-		<jaxrs:extensionMappings> <entry key="xml" value="application/xml" /> </jaxrs:extensionMappings> 
-		</jaxrs:server> -->
-		
-		
-	<import resource="classpath:META-INF/cxf/cxf.xml"/>
-	<import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+	<!-- demo service implementation -->
+	<bean id="demoService" class="com.demo.rs.DemoServiceImpl" scope="singleton" />
+
+	<!-- rest services -->
+	<jaxrs:server id="restServices" address="/demo">
+		<jaxrs:serviceBeans>
+			<ref bean="demoService" />
+		</jaxrs:serviceBeans>
+	</jaxrs:server>
 </beans>
