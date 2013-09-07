@@ -18,7 +18,7 @@
 
 	<!-- demo service implementation -->
 	<bean id="demoService" class="com.demo.rs.DemoServiceImpl" scope="singleton" />
-	
+
 	<bean id="requestMessageHandler" class="com.demo.rs.RequestMessageHandlerImpl" scope="singleton" />
 
 	<!-- rest services -->
@@ -33,35 +33,20 @@
 
 	<!-- jms configuration -->
 
-	<!-- a pooling based JMS provider -->
-	
 	<bean id="xaFactory" class="org.apache.activemq.ActiveMQXAConnectionFactory">
-		<property name="brokerURL" value="tcp://localhost:61616"/>
+		<property name="brokerURL" value="tcp://localhost:61616" />
 	</bean>
-	
-		<bean id="atomikosConnectionFactoryBean"
-		class="com.atomikos.jms.AtomikosConnectionFactoryBean" destroy-method="close">
-		<property name="uniqueResourceName" value="QUEUE_BROKER"/>
-		<property name="xaConnectionFactory" ref="xaFactory"/>
+
+	<bean id="atomikosConnectionFactoryBean" class="com.atomikos.jms.AtomikosConnectionFactoryBean" destroy-method="close">
+		<property name="uniqueResourceName" value="QUEUE_BROKER" />
+		<property name="xaConnectionFactory" ref="xaFactory" />
 	</bean>
-	
-<!-- 	<bean id="jmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop"> -->
-<!-- 		<property name="connectionFactory"> -->
-<!-- 			<bean class="org.apache.activemq.ActiveMQConnectionFactory"> -->
-<!-- 				<property name="brokerURL"> -->
-<!-- 					<value>tcp://localhost:61616</value> -->
-<!-- 				</property> -->
-<!-- 			</bean> -->
-<!-- 		</property> -->
-<!-- 	</bean> -->
 
 	<!-- spring jms template -->
 	<bean id="demoJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory" ref="atomikosConnectionFactoryBean" />
-		<property name="sessionTransacted" value="true"/>
+		<property name="sessionTransacted" value="true" />
 	</bean>
-
-
 
 	<!-- publisher -->
 	<bean id="jmsSendTest" class="com.demo.jms.DemoPublisherImpl" />

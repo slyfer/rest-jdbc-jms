@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 
  * @author Ciro Cardone
  */
-@Transactional(value = "transactionManager", propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
 public abstract class GenericDaoImpl<T, PK extends Serializable> implements GenericDao<T, PK> {
 
 	/**

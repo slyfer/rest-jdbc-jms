@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+												http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+                                                http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd 
+                                                http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+                                                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+                                            	">
+
+	<!-- persistence unit -->
+	<bean id="demoPuManager" class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
+		<property name="persistenceXmlLocations">
+			<list>
+				<value>classpath*:META-INF/demo-persistence.xml</value>
+			</list>
+		</property>
+		<property name="dataSources">
+			<map>
+				<entry key="mainDataSource" value-ref="demoDataSource" />
+			</map>
+		</property>
+		<!-- if no datasource is specified, use this one -->
+		<property name="defaultDataSource" ref="demoDataSource" />
+	</bean>
+
+	<!-- data source -->
+	<bean id="demoDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/rest_demo" />
+		<property name="username" value="root" />
+		<property name="password" value="password" />
+		<property name="validationQuery" value="SELECT 1" />
+	</bean>
+
+	<!-- jpa annotation processor -->
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<!-- jpa + hibernate -->
+	<bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="database" value="MYSQL" />
+		<property name="showSql" value="${hibernate.show.sql}" />
+		<property name="generateDdl" value="${hibernate.generate.ddl}" />
+	</bean>
+
+	<!-- entity manger factory -->
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+
+		<property name="persistenceUnitManager" ref="demoPuManager" />
+		<property name="dataSource" ref="demoDataSource" />
+		<property name="persistenceUnitName" value="demo-pu" />
+		<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+	</bean>
+	
+	<!-- transaction manager -->
+	<bean id="springTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<!-- handle @transactional annotation -->
+	<tx:annotation-driven transaction-manager="springTransactionManager" />
+
+	<!-- daos -->
+	<bean id="processedMessageDao" class="com.demo.dao.ProcessedMessageDaoImpl" />
+
+</beans>

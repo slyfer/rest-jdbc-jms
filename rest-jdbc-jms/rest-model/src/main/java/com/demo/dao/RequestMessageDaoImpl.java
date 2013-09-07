@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class RequestMessageDaoImpl extends GenericDaoImpl<RequestMessage, String> implements RequestMessageDao {
 
 	/**
-	 * Create a new dao
+	 * Creates a new dao
 	 */
 	public RequestMessageDaoImpl() {
 		super(RequestMessage.class);
