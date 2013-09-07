@@ -1,24 +1,34 @@
 <configuration scan="true" scanPeriod="30 seconds" debug="true">
-  
-  
-  <!-- CONSOLE APPENDER -->
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-  
-    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
-    </encoder>
-  </appender>
 
-  <!-- LOGGERS -->
-  <logger name="com.demo" level="TRACE" />
-  
-  <logger name="org.springframework" level="WARN" />
-  
-  <logger name="org.apache.cxf" level="WARN" />
-  
-  <!-- ROOT LOGGER -->
-  <root level="INFO">
-    <appender-ref ref="STDOUT" />
-  </root>
+
+	<!-- CONSOLE APPENDER -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- ERROR FILE APPENDER -->
+	<appender name="ERROR-FILE" class="ch.qos.logback.core.FileAppender">
+		<file>${failed.request.logger.file.path}</file>
+		<append>true</append>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- LOGGERS -->
+	<logger name="com.demo" level="TRACE" />
+
+	<!-- FAILED REQUEST LOGGER -->
+	<logger name="failed.request.logger" level="ERROR" additivity="false">
+		<appender-ref ref="ERROR-FILE" />
+	</logger>
+
+	<!-- ROOT LOGGER -->
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+	</root>
+
 
 </configuration>

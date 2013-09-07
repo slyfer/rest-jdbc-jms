@@ -35,6 +35,10 @@ public class DemoStarter {
 		new DemoStarter().start();
 	}
 
+	/**
+	 * Init spring and runs rest clients
+	 * 
+	 */
 	public void start() {
 		ClassPathXmlApplicationContext classPathXmlApplicationContext = null;
 

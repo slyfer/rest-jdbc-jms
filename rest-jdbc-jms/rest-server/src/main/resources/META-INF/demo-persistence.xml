@@ -1,0 +1,7 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+
+	<persistence-unit name="demo-pu" transaction-type="JTA">
+		<class>it.seat.core.db.model.RequestMessage</class>
+	</persistence-unit>
+	
+</persistence>
