@@ -1,24 +1,19 @@
-package com.demo.rs;
+package com.demo.rs.client;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
-
-import org.apache.cxf.jaxrs.model.wadl.Description;
 
 import com.demo.rs.model.Response;
 
 /**
- * Demo rest service
+ * Demo rest service client
  * 
  * @author Ciro Cardone
  * 
  */
 @Path("/demoService")
-@Produces("application/xml")
-@Description("")
 public interface DemoService {
 
 	@POST

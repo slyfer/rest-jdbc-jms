@@ -1,5 +1,7 @@
 package com.demo.rs;
 
+import it.seat.core.db.model.RequestMessage;
+
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -11,7 +13,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.demo.dao.RequestMessageDao;
 import com.demo.rs.model.Response;
 
 /**
@@ -22,7 +26,16 @@ import com.demo.rs.model.Response;
  */
 public class DemoServiceImpl implements DemoService {
 
+	/**
+	 * Logger
+	 */
 	final Logger logger = LoggerFactory.getLogger(DemoServiceImpl.class);
+
+	/**
+	 * Dao for {@link RequestMessage}
+	 */
+	@Autowired
+	private RequestMessageDao requestMessageDao;
 
 	@Override
 	public Response putId(final String id) throws WebApplicationException {
@@ -31,6 +44,13 @@ public class DemoServiceImpl implements DemoService {
 
 		try {
 			final Date processTime = new Date();
+
+			final RequestMessage requestMessage = new RequestMessage();
+			requestMessage.setId(id);
+			requestMessage.setCreationDate(processTime);
+			requestMessage.setCreationActor(this.getClass().getName());
+
+			requestMessageDao.create(requestMessage);
 
 			logger.debug("Process time for {} is {}", id, processTime);
 
@@ -68,6 +88,21 @@ public class DemoServiceImpl implements DemoService {
 		response.setTimestamp(xmlTimestamp);
 
 		return response;
+	}
+
+	/**
+	 * @return the requestMessageDao
+	 */
+	public RequestMessageDao getRequestMessageDao() {
+		return requestMessageDao;
+	}
+
+	/**
+	 * @param requestMessageDao
+	 *            the requestMessageDao to set
+	 */
+	public void setRequestMessageDao(final RequestMessageDao requestMessageDao) {
+		this.requestMessageDao = requestMessageDao;
 	}
 
 }
