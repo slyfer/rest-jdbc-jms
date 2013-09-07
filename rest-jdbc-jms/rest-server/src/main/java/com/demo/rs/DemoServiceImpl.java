@@ -1,7 +1,5 @@
 package com.demo.rs;
 
-import it.seat.core.db.model.RequestMessage;
-
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -15,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.demo.dao.RequestMessageDao;
 import com.demo.rs.model.Response;
 
 /**
@@ -31,11 +28,8 @@ public class DemoServiceImpl implements DemoService {
 	 */
 	final Logger logger = LoggerFactory.getLogger(DemoServiceImpl.class);
 
-	/**
-	 * Dao for {@link RequestMessage}
-	 */
 	@Autowired
-	private RequestMessageDao requestMessageDao;
+	private RequestMessageHanlder requestMessageHanlder;
 
 	@Override
 	public Response putId(final String id) throws WebApplicationException {
@@ -43,14 +37,7 @@ public class DemoServiceImpl implements DemoService {
 		logger.info("Processing " + id);
 
 		try {
-			final Date processTime = new Date();
-
-			final RequestMessage requestMessage = new RequestMessage();
-			requestMessage.setId(id);
-			requestMessage.setCreationDate(processTime);
-			requestMessage.setCreationActor(this.getClass().getName());
-
-			requestMessageDao.create(requestMessage);
+			final Date processTime = getRequestMessageHanlder().handle(id);
 
 			logger.debug("Process time for {} is {}", id, processTime);
 
@@ -91,18 +78,18 @@ public class DemoServiceImpl implements DemoService {
 	}
 
 	/**
-	 * @return the requestMessageDao
+	 * @return the requestMessageHanlder
 	 */
-	public RequestMessageDao getRequestMessageDao() {
-		return requestMessageDao;
+	public RequestMessageHanlder getRequestMessageHanlder() {
+		return requestMessageHanlder;
 	}
 
 	/**
-	 * @param requestMessageDao
-	 *            the requestMessageDao to set
+	 * @param requestMessageHanlder
+	 *            the requestMessageHanlder to set
 	 */
-	public void setRequestMessageDao(final RequestMessageDao requestMessageDao) {
-		this.requestMessageDao = requestMessageDao;
+	public void setRequestMessageHanlder(final RequestMessageHanlder requestMessageHanlder) {
+		this.requestMessageHanlder = requestMessageHanlder;
 	}
 
 }
