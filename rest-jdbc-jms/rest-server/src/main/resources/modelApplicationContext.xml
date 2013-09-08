@@ -27,9 +27,9 @@
 	<!-- xa datasoruce -->
 	<bean id="demoDataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
 		<property name="uniqueResourceName" value="XADBMS" />
-		<property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource" />
+		<property name="xaDataSourceClassName" value="${db.driver.class.name}" />
 		<property name="xaProperties" ref="databaseProperties" />
-		<property name="testQuery" value="select 1" />
+		<property name="testQuery" value="${db.validation.query}" />
 	</bean>
 
 	<util:properties id="databaseProperties" location="classpath:database.properties" />

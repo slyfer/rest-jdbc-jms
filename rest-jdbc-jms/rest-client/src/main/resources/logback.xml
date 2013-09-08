@@ -1,4 +1,4 @@
-<configuration scan="true" scanPeriod="30 seconds" debug="true">
+<configuration scan="false">
 
 
 	<!-- CONSOLE APPENDER -->

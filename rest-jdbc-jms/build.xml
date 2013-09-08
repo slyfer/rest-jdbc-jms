@@ -1,0 +1,37 @@
+<project name="rest-jdbc-jms" default="build" basedir=".">
+
+	<!-- build alla modules -->
+	<target name="build">
+		<exec failonerror="true" executable="mvn" dir=".">
+			<arg value="-P" />
+			<arg value="demo" />
+			<arg value="clean" />
+			<arg value="install" />
+		</exec>
+	</target>
+
+	<!-- run jms client -->
+	<target name="run-jms-client">
+		<exec failonerror="true" executable="java" dir="./jms-client/target">
+			<arg value="-jar" />
+			<arg value="jms-client.jar" />
+		</exec>
+	</target>
+
+	<!-- run rest client -->
+	<target name="run-rest-client">
+		<exec failonerror="true" executable="java" dir="./rest-client/target">
+			<arg value="-jar" />
+			<arg value="rest-client.jar" />
+		</exec>
+	</target>
+
+	<!-- run rest server -->
+	<target name="run-rest-server">
+		<exec failonerror="true" executable="mvn" dir="./rest-server">
+			<arg value="-P" />
+			<arg value="demo" />
+			<arg value="jetty:run" />
+		</exec>
+	</target>
+</project>

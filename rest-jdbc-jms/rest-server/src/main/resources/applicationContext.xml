@@ -12,6 +12,9 @@
 	<!-- tells spring that we use annotations -->
 	<context:annotation-config />
 
+	<!-- properties -->
+	<util:properties id="serverProperties" location="classpath:server.properties" />
+
 	<!-- cxf imports -->
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
@@ -34,7 +37,7 @@
 	<!-- jms configuration -->
 
 	<bean id="xaFactory" class="org.apache.activemq.ActiveMQXAConnectionFactory">
-		<property name="brokerURL" value="tcp://localhost:61616" />
+		<property name="brokerURL" value="${jms.broker.url}" />
 	</bean>
 
 	<bean id="atomikosConnectionFactoryBean" class="com.atomikos.jms.AtomikosConnectionFactoryBean" destroy-method="close">

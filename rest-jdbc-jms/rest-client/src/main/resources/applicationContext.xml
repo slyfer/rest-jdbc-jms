@@ -26,7 +26,7 @@
 
 	<!-- demo service client -->
 	<jaxrs:client id="demoRestClient"
-		address="http://localhost:8080/rest-server/services/demo"
+		address="${rest.server.endpoint}"
 		serviceClass="com.demo.rs.client.DemoService">
 		<jaxrs:headers>
 			<entry key="Accept" value="application/xml" />

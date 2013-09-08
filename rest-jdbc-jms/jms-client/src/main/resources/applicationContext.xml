@@ -15,6 +15,9 @@
 	<!-- tells spring that we use annotations -->
 	<context:annotation-config />
 
+	<!-- properties -->
+	<util:properties id="clientProperties" location="classpath:client.properties" />
+
 	<!-- db resources -->
 	<import resource="classpath:modelApplicationContext.xml" />
 
@@ -22,7 +25,7 @@
 	<bean id="jmsConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">
 		<property name="connectionFactory">
 			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
-				<property name="brokerURL" value="tcp://localhost:61616" />
+				<property name="brokerURL" value="${jms.broker.url}" />
 			</bean>
 		</property>
 	</bean>

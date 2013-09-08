@@ -8,7 +8,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
@@ -21,6 +20,7 @@ import com.demo.rs.client.DemoService;
 import com.demo.rs.model.Response;
 
 /**
+ * Implementation of {@link ClientsRunner}
  * 
  * @author Ciro Cardone
  * 
@@ -33,7 +33,7 @@ public class ClientsRunnerImpl implements ClientsRunner {
 	final Logger logger = LoggerFactory.getLogger(ClientsRunnerImpl.class);
 
 	/**
-	 * Logger
+	 * Error logger
 	 */
 	final Logger errorLogger = LoggerFactory.getLogger("failed.request.logger");
 
@@ -60,6 +60,7 @@ public class ClientsRunnerImpl implements ClientsRunner {
 		logger.debug("threadPool size " + threadPoolSize);
 		logger.debug("clients to run " + clients);
 
+		// creates a thread pool to runs clients
 		final ExecutorService threadPool = Executors.newFixedThreadPool(threadPoolSize);
 		final Collection<RestClient> tasks = new ArrayList<RestClient>(clients);
 
@@ -71,6 +72,7 @@ public class ClientsRunnerImpl implements ClientsRunner {
 			final List<Future<Response>> results = threadPool.invokeAll(tasks);
 			threadPool.shutdown();
 
+			// check results
 			for (int i = 0; i < results.size(); i++) {
 
 				Response response;
@@ -83,7 +85,7 @@ public class ClientsRunnerImpl implements ClientsRunner {
 				}
 			}
 
-			threadPool.awaitTermination(100, TimeUnit.SECONDS);
+			// threadPool.awaitTermination(100, TimeUnit.SECONDS);
 		} catch (final InterruptedException e) {
 			logger.error("Thread was interrrupetd", e);
 		}

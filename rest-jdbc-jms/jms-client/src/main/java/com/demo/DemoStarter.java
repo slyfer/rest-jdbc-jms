@@ -33,14 +33,14 @@ public class DemoStarter {
 	}
 
 	/**
-	 * Init spring and runs jms client
+	 * Initializes spring and runs jms client
 	 * 
 	 */
 	public void start() {
-		ClassPathXmlApplicationContext classPathXmlApplicationContext = null;
 
 		try {
-			classPathXmlApplicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+
+			final ClassPathXmlApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 
 			final DemoSubscriber demoSubscriber = (DemoSubscriber) classPathXmlApplicationContext.getBean(CLIENT_RUNNER_BEAN_NAME);
 
